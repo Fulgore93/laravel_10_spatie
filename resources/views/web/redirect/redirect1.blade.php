@@ -6,4 +6,6 @@
 
 <h1>redirect 1</h1>
 
-<a href="{{route('redirect2')}}">redirect2</a>
+@can('redirect2')
+    <a href="{{route('redirect2')}}">redirect2</a>
+@endcan

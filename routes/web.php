@@ -24,7 +24,24 @@ Route::controller(LoginController::class)->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/redirect1', function () { return view('web.redirect.redirect1'); })->name('redirect1');
-    Route::get('/redirect2', function () { return view('web.redirect.redirect2'); })->name('redirect2');
+    // middleware por roles
+    Route::middleware('role:admin|usernormal')->group(function () {
+        Route::get('/redirect1', function () { return view('web.redirect.redirect1'); })->name('redirect1');
+    });
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/redirect2', function () { return view('web.redirect.redirect2'); })->name('redirect2');
+    });
+    
+    // middleware por permisos
+    // Route::middleware('permission:redirect1')->group(function () {
+    //     Route::get('/redirect1', function () { return view('web.redirect.redirect1'); })->name('redirect1');
+    // });
+    // Route::middleware('permission:redirect2')->group(function () {
+    //     Route::get('/redirect2', function () { return view('web.redirect.redirect2'); })->name('redirect2');
+    // });
+
+    // permisos directos en las rutas
+    // Route::get('/redirect1', function () { return view('web.redirect.redirect1'); })->name('redirect1')->permission('redirect1');
+    // Route::get('/redirect2', function () { return view('web.redirect.redirect2'); })->name('redirect2')->permission('redirect2');
 });
 
